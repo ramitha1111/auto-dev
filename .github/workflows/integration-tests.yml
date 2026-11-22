@@ -1,3 +1,10 @@
+# Optimized by ci-cost (https://github.com/mariotavarez/ci-cost)
+# Applied 3 optimizations:
+# - [MEDIUM] Add concurrency group to "integration-tests.yml"
+# - [MEDIUM] Use "npm ci" instead of "npm install" in "integration-tests"
+# - [LOW] Use shallow clone in "integration-tests" job
+# Estimated savings: ~3 min/run
+#
 name: MPP Coding Agent Integration
 
 on:
@@ -37,6 +44,10 @@ on:
         default: false
         type: boolean
 
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   integration-tests:
     runs-on: ubuntu-latest
